@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 53971003}
   - component: {fileID: 53971005}
   - component: {fileID: 53971004}
+  - component: {fileID: 53971006}
   m_Layer: 0
   m_Name: CodeBox
   m_TagString: Untagged
@@ -184,6 +185,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53971002}
   m_CullTransparentMesh: 0
+--- !u!114 &53971006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53971002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5834350a621cd462d829691f98b1a626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &118960107
 GameObject:
   m_ObjectHideFlags: 0
@@ -7434,6 +7447,7 @@ GameObject:
   - component: {fileID: 2112418025}
   - component: {fileID: 2112418024}
   - component: {fileID: 2112418026}
+  - component: {fileID: 2112418027}
   m_Layer: 0
   m_Name: MoveRight
   m_TagString: Untagged
@@ -7507,3 +7521,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4ce3595a2f94c9eb0b75b2bb18cd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1796645678}
+--- !u!225 &2112418027
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112418022}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
