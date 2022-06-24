@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - MoveRight
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Ground
   - 
   - 
   - 
@@ -50,11 +51,11 @@ TagManager:
   - name: Floor
     uniqueID: 3714911513
     locked: 0
-  - name: Player
-    uniqueID: 3905917627
-    locked: 0
   - name: ForeGround
     uniqueID: 3356023797
+    locked: 0
+  - name: Player
+    uniqueID: 3905917627
     locked: 0
   - name: Buttons
     uniqueID: 1154513695

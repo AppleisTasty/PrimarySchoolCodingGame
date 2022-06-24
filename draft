@@ -1,1 +1,8 @@
 git config credential.helper store`
+Next step:
+1. fulfill movement function on player
+2. accomplish scene switch when the player reach the goal
+3. accomplish player animations
+
+how to accomplish dragndrop
+use tag, if tag == A, then add A component to the list.

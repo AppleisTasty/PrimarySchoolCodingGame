@@ -53,8 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CodeBox.cs" />
-     <Compile Include="Assets\DragnDrop.cs" />
+     <Compile Include="Assets\Scripts\CodeBox.cs" />
+     <Compile Include="Assets\Scripts\DragnDrop.cs" />
+     <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerReachGoal.cs" />
  <Reference Include="UnityEngine.Purchasing">
  <HintPath>/Users/tablee/GitRepository/PrimarySchoolCodingGame/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
