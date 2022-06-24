@@ -8,7 +8,7 @@ public class DragnDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     private RectTransform rectTransform;
     [SerializeField] private Canvas canvas;
     private CanvasGroup canvasGroup;
-    private Vector2 positionBeforeMovement;
+    private Vector2 positionBeforeMovement; 
 
     private void Awake() //executes when the script instance is loaded
     {

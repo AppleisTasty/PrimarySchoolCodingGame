@@ -9,13 +9,18 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
     private enum State { idle, running, jumping, falling, hurt }
-    public enum Move { doNothing, left, right, jumpLeft, jumpRight}
+    public enum Move { doNothing, moveLeft, moveRight, jumpLeft, jumpRight}
     private State state = State.idle;
     public Move move;
 
+    //sound track
+    public AudioSource jumpAudio;
+    public AudioSource collectableAudio;
+    public AudioSource moveAudio;
+
     [SerializeField] private LayerMask ground;
-    float moveForce = 8.5f;
-    float jumpForce = 15;
+    [SerializeField]float moveForce = 8f;
+    float jumpForce = 10;
     private float hurtForce = 10f;
 
 
@@ -33,15 +38,27 @@ public class PlayerController : MonoBehaviour
         Movement();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "Cherry")
+        {
+            collectableAudio.Play();
+            Destroy(collision.gameObject);
+
+
+        }
+        
+    }
+
     private void Movement()
     {
         switch (move)
         {
-            case Move.left:
+            case Move.moveLeft:
                 MoveLeft();
                 move = Move.doNothing;
                 break;
-            case Move.right:
+            case Move.moveRight:
                 MoveRight();
                 move = Move.doNothing;
                 break;
@@ -60,6 +77,7 @@ public class PlayerController : MonoBehaviour
         AnimationState();
         anim.SetInteger("state", (int)state); // set corresponding animation
     }
+
     public void MoveRight()
     {
         transform.localScale = new Vector2(1, 1);
@@ -74,13 +92,17 @@ public class PlayerController : MonoBehaviour
 
     public void JumpRight()
     {
-        rb.velocity = new Vector2(moveForce, jumpForce);
+        jumpAudio.Play();
+        transform.localScale = new Vector2(1, 1);
+        rb.velocity = new Vector2(moveForce*2/3, jumpForce);
         state = State.jumping;
     }
 
     public void JumpLeft()
     {
-        rb.velocity = new Vector2(-moveForce, jumpForce);
+        jumpAudio.Play();
+        transform.localScale = new Vector2(-1, 1);
+        rb.velocity = new Vector2(-moveForce*2/3, jumpForce);
         state = State.jumping;
     }
 
@@ -118,5 +140,10 @@ public class PlayerController : MonoBehaviour
             state = State.idle;
         }
 
+    }
+
+    public void PlayMoveAudio()
+    {
+        moveAudio.Play();
     }
 }
