@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask ground;
     [SerializeField]float moveForce = 8f;
-    float jumpForce = 10;
+    float jumpForce = 14;
     private float hurtForce = 10f;
 
 
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
     {
         jumpAudio.Play();
         transform.localScale = new Vector2(1, 1);
-        rb.velocity = new Vector2(moveForce*2/3, jumpForce);
+        rb.velocity = new Vector2(moveForce/2, jumpForce);
         state = State.jumping;
     }
 
@@ -102,9 +102,10 @@ public class PlayerController : MonoBehaviour
     {
         jumpAudio.Play();
         transform.localScale = new Vector2(-1, 1);
-        rb.velocity = new Vector2(-moveForce*2/3, jumpForce);
+        rb.velocity = new Vector2(-moveForce/2, jumpForce);
         state = State.jumping;
     }
+
 
     private void AnimationState()
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
@@ -13,10 +14,16 @@ public class CodePanel : MonoBehaviour, IDropHandler
     public Sprite MoveLeft;
     public Sprite JumpRight; 
     public Sprite JumpLeft;
+    public Sprite HeightReduce;
     private float executionDelaySeconds = 1.5f; //s
     public Button GoButton;
-    public Text GoButtonText;
-    
+    public TextMeshProUGUI GoButtonText;
+    public RectTransform CodePanelRectTransform;
+    public RectTransform DraggableTemplate;
+    public ScrollRect ScrollBar;
+    public TextMeshProUGUI LevelLabel;
+    public AudioSource DraggableDropAudio;
+
 
     //record player's initial place
     private Transform playerInitialPosition;
@@ -26,16 +33,19 @@ public class CodePanel : MonoBehaviour, IDropHandler
     {
         //find the playerController script
         playerController = GameObject.FindObjectOfType<PlayerController>();
-        transform.GetChild(0).gameObject.active = false;
-        playerInitialPosition = playerController.gameObject.transform;
+        //transform.GetChild(0).gameObject.active = false; //inactive 0 object in vertical layout
+        playerInitialPosition = playerController.gameObject.transform; //reset player position
+        LevelLabel.text = SceneManager.GetActiveScene().name;//initiate level label
+
     }
 
     public void OnDrop(PointerEventData eventData)
     {
+        DraggableDropAudio.Play();// play the sound
         Debug.Log("OnDrop");
         //eventData.pointerDrag is the aim object that is being currently dragges
 
-        if( eventData.pointerDrag != null)
+        if( eventData.pointerDrag != null && eventData.pointerDrag.gameObject.tag == "Undropped" && GoButtonText.text == "Go!")
         {
             //make the item snap into the position as we dropped
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
@@ -56,11 +66,23 @@ public class CodePanel : MonoBehaviour, IDropHandler
             {
                 g1.GetComponent<Image>().sprite = JumpRight;
             }
-            else
+            else if (g1.name == "JumpLeft")
             {
                 g1.GetComponent<Image>().sprite = JumpLeft;
             }
-            
+            else if (g1.name == "HeightReduce")
+            {
+                g1.GetComponent<Image>().sprite = HeightReduce;
+                Destroy(eventData.pointerDrag.gameObject);
+            }
+            // add length to the height of the panel to fulfill scroll, set anchor as top-center
+            if(transform.childCount > 9)
+            {
+                CodePanelRectTransform.sizeDelta = new Vector2(CodePanelRectTransform.sizeDelta.x, CodePanelRectTransform.sizeDelta.y + DraggableTemplate.sizeDelta.y + 1.2f); //2 is the spacing offset
+                ScrollBar.normalizedPosition = new Vector2(0, 0); //0,0 for bottom, 0,1 for top
+
+            }
+
             g1.active = true;
 
 

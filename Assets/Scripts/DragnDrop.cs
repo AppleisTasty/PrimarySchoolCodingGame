@@ -8,7 +8,8 @@ public class DragnDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     private RectTransform rectTransform;
     [SerializeField] private Canvas canvas;
     private CanvasGroup canvasGroup;
-    private Vector2 positionBeforeMovement; 
+    private Vector2 positionBeforeMovement;
+    public AudioSource DraggableDragAudio;
 
     private void Awake() //executes when the script instance is loaded
     {
@@ -19,6 +20,7 @@ public class DragnDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
+        DraggableDragAudio.Play();
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false; //disable the listener on this instance
     }

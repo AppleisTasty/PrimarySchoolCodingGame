@@ -55,8 +55,10 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CodePanel.cs" />
      <Compile Include="Assets\Scripts\DragnDrop.cs" />
+     <Compile Include="Assets\Scripts\LoadingScript.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerReachGoal.cs" />
+     <Compile Include="Assets\Scripts\WelcomeScript.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\8Bit Music Album - 051321\Notes.txt" />
