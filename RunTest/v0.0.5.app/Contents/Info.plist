@@ -10,7 +10,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>v0.5</string>
+	<string>v0.0.5</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Unity Player version 2018.4.35f1 (dbb5675dce2d). (c) 2021 Unity Technologies ApS. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
