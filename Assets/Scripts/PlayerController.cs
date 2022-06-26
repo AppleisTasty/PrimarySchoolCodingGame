@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
     private enum State { idle, running, jumping, falling, hurt }
-    public enum Move { doNothing, moveLeft, moveRight, jumpLeft, jumpRight}
+    public enum Move { doNothing, moveLeft, moveRight, jumpLeft, jumpRight, heightReduce}
     private State state = State.idle;
     public Move move;
 
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]float moveForce = 8f;
     float jumpForce = 14;
     private float hurtForce = 10f;
+    private float heightReduceRatio = 0.6f;
 
 
     void Start()
@@ -70,6 +71,10 @@ public class PlayerController : MonoBehaviour
                 JumpRight();
                 move = Move.doNothing;
                 break;
+            case Move.heightReduce:
+                HeightReduce();
+                move = Move.doNothing;
+                break;
             default:
                 move = Move.doNothing;
                 break;
@@ -80,20 +85,20 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
-        transform.localScale = new Vector2(1, 1);
+        transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
         rb.velocity = new Vector2(moveForce, 0);  //rb.velocity.y
     }
 
     public void MoveLeft()
     {
-        transform.localScale = new Vector2(-1, 1);
+        transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
         rb.velocity = new Vector2(-moveForce, 0); //holds x&y value 
     }
 
     public void JumpRight()
     {
         jumpAudio.Play();
-        transform.localScale = new Vector2(1, 1);
+        transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
         rb.velocity = new Vector2(moveForce/2, jumpForce);
         state = State.jumping;
     }
@@ -101,11 +106,15 @@ public class PlayerController : MonoBehaviour
     public void JumpLeft()
     {
         jumpAudio.Play();
-        transform.localScale = new Vector2(-1, 1);
+        transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
         rb.velocity = new Vector2(-moveForce/2, jumpForce);
         state = State.jumping;
     }
 
+    public void HeightReduce()
+    {
+        transform.localScale = new Vector2(heightReduceRatio * transform.localScale.x, heightReduceRatio * transform.localScale.y);
+    }
 
     private void AnimationState()
     {

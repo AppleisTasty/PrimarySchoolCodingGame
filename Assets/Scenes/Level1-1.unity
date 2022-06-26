@@ -206,7 +206,13 @@ MonoBehaviour:
   MoveLeft: {fileID: 21300000, guid: f1dfc1f98fa954b43b469b827ca2d667, type: 3}
   JumpRight: {fileID: 21300000, guid: 7c7f859613b6d4412877eb60bf33ed02, type: 3}
   JumpLeft: {fileID: 21300000, guid: 330e2755352804b5084be9e7d818cfb4, type: 3}
-  HeightReduce: {fileID: 0}
+  HeightReduce: {fileID: 21300000, guid: 91af33faa7b6b4fc9bb14e26cd3be8dd, type: 3}
+  MoveRightExecution: {fileID: 21300000, guid: bfe96a32d9fdd41c394442e65ebf584b, type: 3}
+  MoveLeftExecution: {fileID: 21300000, guid: 590e2f5ee530b4a03bcec8ecc75b424a, type: 3}
+  JumpRightExecution: {fileID: 21300000, guid: 825ff841775914b429faae882645e7ee, type: 3}
+  JumpLeftExecution: {fileID: 21300000, guid: fea9cee12e7ed40a4a7d54c39e840a08, type: 3}
+  HeightReduceExecution: {fileID: 21300000, guid: 0eb09572ab48b4e8c9b178dea22bc71a,
+    type: 3}
   GoButton: {fileID: 1916160563}
   GoButtonText: {fileID: 1792623616}
   CodePanelRectTransform: {fileID: 53971003}

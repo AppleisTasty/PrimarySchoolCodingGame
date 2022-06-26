@@ -15,6 +15,11 @@ public class CodePanel : MonoBehaviour, IDropHandler
     public Sprite JumpRight; 
     public Sprite JumpLeft;
     public Sprite HeightReduce;
+    public Sprite MoveRightExecution;
+    public Sprite MoveLeftExecution;
+    public Sprite JumpRightExecution;
+    public Sprite JumpLeftExecution; 
+    public Sprite HeightReduceExecution;
     private float executionDelaySeconds = 1.5f; //s
     public Button GoButton;
     public TextMeshProUGUI GoButtonText;
@@ -23,6 +28,7 @@ public class CodePanel : MonoBehaviour, IDropHandler
     public ScrollRect ScrollBar;
     public TextMeshProUGUI LevelLabel;
     public AudioSource DraggableDropAudio;
+    private int DraggableTemplateNumber = 2;
 
 
     //record player's initial place
@@ -51,28 +57,28 @@ public class CodePanel : MonoBehaviour, IDropHandler
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
             // replicate from existing item (if it is not replicating there will be problem for sizes);
-            GameObject g1 = Instantiate(transform.GetChild(0).gameObject, transform);
-            g1.name = eventData.pointerDrag.gameObject.name;
+            
+            
 
-            if(g1.name == "MoveRight")
+            if(eventData.pointerDrag.gameObject.name == "MoveRight")
             {
-                g1.GetComponent<Image>().sprite = MoveRight;
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = MoveRight;
             }
-            else if (g1.name == "MoveLeft")
+            else if (eventData.pointerDrag.gameObject.name == "MoveLeft")
             {
-                g1.GetComponent<Image>().sprite = MoveLeft;
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = MoveLeft;
             }
-            else if (g1.name == "JumpRight")
+            else if (eventData.pointerDrag.gameObject.name == "JumpRight")
             {
-                g1.GetComponent<Image>().sprite = JumpRight;
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = JumpRight;
             }
-            else if (g1.name == "JumpLeft")
+            else if (eventData.pointerDrag.gameObject.name == "JumpLeft")
             {
-                g1.GetComponent<Image>().sprite = JumpLeft;
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = JumpLeft;
             }
-            else if (g1.name == "HeightReduce")
+            else if (eventData.pointerDrag.gameObject.name == "HeightReduce")
             {
-                g1.GetComponent<Image>().sprite = HeightReduce;
+                InitializeNewDraggableItemfromTemplate(1, eventData).GetComponent<Image>().sprite = HeightReduce;
                 Destroy(eventData.pointerDrag.gameObject);
             }
             // add length to the height of the panel to fulfill scroll, set anchor as top-center
@@ -83,7 +89,6 @@ public class CodePanel : MonoBehaviour, IDropHandler
 
             }
 
-            g1.active = true;
 
 
             //access pointerdragged object's name
@@ -93,6 +98,14 @@ public class CodePanel : MonoBehaviour, IDropHandler
             //}
             //player move right
         }
+    }
+
+    private GameObject InitializeNewDraggableItemfromTemplate(int itemNumber, PointerEventData eventData)
+    {
+        GameObject g1 = Instantiate(transform.GetChild(itemNumber).gameObject, transform);
+        g1.name = eventData.pointerDrag.gameObject.name;
+        g1.SetActive(true);
+        return g1;
     }
 
     public void ExecuteCodeGroup() 
@@ -108,21 +121,40 @@ public class CodePanel : MonoBehaviour, IDropHandler
         {
             if (transform.GetChild(i).name == "MoveRight")
             {
+                transform.GetChild(i).GetComponent<Image>().sprite = MoveRightExecution;
                 playerController.move = PlayerController.Move.moveRight;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = MoveRight;
             }
             else if (transform.GetChild(i).name == "MoveLeft")
             {
+                transform.GetChild(i).GetComponent<Image>().sprite = MoveLeftExecution;
                 playerController.move = PlayerController.Move.moveLeft;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = MoveLeft;
             }
             else if (transform.GetChild(i).name == "JumpRight")
             {
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpRightExecution;
                 playerController.move = PlayerController.Move.jumpRight;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpRight;
             }
-            else
+            else if (transform.GetChild(i).name == "JumpLeft")
             {
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpLeftExecution;
                 playerController.move = PlayerController.Move.jumpLeft;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpLeft;
             }
-            yield return new WaitForSeconds(executionDelaySeconds);
+            else if (transform.GetChild(i).name == "HeightReduce")
+            {
+                transform.GetChild(i).GetComponent<Image>().sprite = HeightReduceExecution;
+                playerController.move = PlayerController.Move.heightReduce;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = HeightReduce;
+            }
+            
 
         }
         ClearCodeGroup();
