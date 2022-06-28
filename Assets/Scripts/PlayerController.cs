@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
     private enum State { idle, running, jumping, falling, hurt }
-    public enum Move { doNothing, moveLeft, moveRight, jumpLeft, jumpRight, heightReduce}
+    public enum Move { doNothing, moveLeft, moveRight, jumpLeft, jumpRight, heightReduce, jumpIncrease}
     private State state = State.idle;
     public Move move;
 
@@ -75,6 +75,10 @@ public class PlayerController : MonoBehaviour
                 HeightReduce();
                 move = Move.doNothing;
                 break;
+            case Move.jumpIncrease:
+                JumpIncrease();
+                move = Move.doNothing;
+                break;
             default:
                 move = Move.doNothing;
                 break;
@@ -114,6 +118,11 @@ public class PlayerController : MonoBehaviour
     public void HeightReduce()
     {
         transform.localScale = new Vector2(heightReduceRatio * transform.localScale.x, heightReduceRatio * transform.localScale.y);
+    }
+
+    public void JumpIncrease()
+    {
+        jumpForce *= 1.5f;
     }
 
     private void AnimationState()

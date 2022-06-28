@@ -20,6 +20,10 @@ public class CodePanel : MonoBehaviour, IDropHandler
     public Sprite JumpRightExecution;
     public Sprite JumpLeftExecution; 
     public Sprite HeightReduceExecution;
+    public Sprite JumpIncrease;
+    public Sprite JumpIncreaseExecution;
+    public Sprite RepeatOneTime;
+    public Sprite EndClosure;
     private float executionDelaySeconds = 1.5f; //s
     public Button GoButton;
     public TextMeshProUGUI GoButtonText;
@@ -34,6 +38,10 @@ public class CodePanel : MonoBehaviour, IDropHandler
     //record player's initial place
     private Transform playerInitialPosition;
     //public Transform transformParent;
+
+    //temporary variables
+    Stack<int> repeatStartClosure = new Stack<int>();
+    Stack<int> endClosure = new Stack<int>();
 
     void Awake()
     {
@@ -81,8 +89,21 @@ public class CodePanel : MonoBehaviour, IDropHandler
                 InitializeNewDraggableItemfromTemplate(1, eventData).GetComponent<Image>().sprite = HeightReduce;
                 Destroy(eventData.pointerDrag.gameObject);
             }
+            else if (eventData.pointerDrag.gameObject.name == "JumpIncrease")
+            {
+                InitializeNewDraggableItemfromTemplate(1, eventData).GetComponent<Image>().sprite = JumpIncrease;
+                Destroy(eventData.pointerDrag.gameObject);
+            }
+            else if (eventData.pointerDrag.gameObject.name == "RepeatOneTime")
+            {
+                InitializeNewDraggableItemfromTemplate(1, eventData).GetComponent<Image>().sprite = RepeatOneTime;
+            }
+            else if (eventData.pointerDrag.gameObject.name == "EndClosure")
+            {
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = EndClosure;
+            }
             // add length to the height of the panel to fulfill scroll, set anchor as top-center
-            if(transform.childCount > 9)
+            if (transform.childCount > 9)
             {
                 CodePanelRectTransform.sizeDelta = new Vector2(CodePanelRectTransform.sizeDelta.x, CodePanelRectTransform.sizeDelta.y + DraggableTemplate.sizeDelta.y + 1.2f); //2 is the spacing offset
                 ScrollBar.normalizedPosition = new Vector2(0, 0); //0,0 for bottom, 0,1 for top
@@ -119,7 +140,50 @@ public class CodePanel : MonoBehaviour, IDropHandler
     {
         for (int i = 1; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).name == "MoveRight")
+            if (transform.GetChild(i).name == "EndClosure")
+            {
+                if(endClosure.Count <= 0 && repeatStartClosure.Count <= 0)
+                {
+                    continue;
+                }
+                else if (endClosure.Count <= 0)
+                {
+                    endClosure.Push(i);
+                    i = repeatStartClosure.Pop() - 1;
+                }
+                else
+                {
+                    if (endClosure.Peek() != i)
+                    {
+                        //fist time push and loop back
+                        if (repeatStartClosure.Count > 0)
+                        {
+                            //if repeatStart is not empty, start from the index
+                            endClosure.Push(i);
+                            i = repeatStartClosure.Pop() - 1;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        //second time pop
+                        endClosure.Pop();
+                    }
+                }
+                
+                
+                //to tell if it needs to loop, if not then continue;
+            }
+            else if (transform.GetChild(i).name == "RepeatOneTime")
+            {
+                //set the sign for loop, and jump into next line
+                repeatStartClosure.Push(i + 1); // add into the stack
+                continue;
+            }
+            else if (transform.GetChild(i).name == "MoveRight")
             {
                 transform.GetChild(i).GetComponent<Image>().sprite = MoveRightExecution;
                 playerController.move = PlayerController.Move.moveRight;
@@ -154,9 +218,17 @@ public class CodePanel : MonoBehaviour, IDropHandler
                 yield return new WaitForSeconds(executionDelaySeconds);
                 transform.GetChild(i).GetComponent<Image>().sprite = HeightReduce;
             }
+            else if (transform.GetChild(i).name == "JumpIncrease")
+            {
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpIncreaseExecution;
+                playerController.move = PlayerController.Move.jumpIncrease;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = JumpIncrease;
+            }
             
 
         }
+        yield return new WaitForSeconds(executionDelaySeconds);
         ClearCodeGroup();
 
     }
