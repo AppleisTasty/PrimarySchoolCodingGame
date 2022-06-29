@@ -23,7 +23,11 @@ public class CodePanel : MonoBehaviour, IDropHandler
     public Sprite JumpIncrease;
     public Sprite JumpIncreaseExecution;
     public Sprite RepeatOneTime;
+    public Sprite RepeatOneTimeExecution;
     public Sprite EndClosure;
+    public Sprite EndClosureExecution;
+    public Sprite IfEncounterBox;
+    public Sprite IfEncounterBoxExecution;
     private float executionDelaySeconds = 1.5f; //s
     public Button GoButton;
     public TextMeshProUGUI GoButtonText;
@@ -102,8 +106,12 @@ public class CodePanel : MonoBehaviour, IDropHandler
             {
                 InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = EndClosure;
             }
-            // add length to the height of the panel to fulfill scroll, set anchor as top-center
-            if (transform.childCount > 9)
+            else if (eventData.pointerDrag.gameObject.name == "IfEncounterBox")
+            {
+                InitializeNewDraggableItemfromTemplate(0, eventData).GetComponent<Image>().sprite = IfEncounterBox;
+            }
+                // add length to the height of the panel to fulfill scroll, set anchor as top-center
+                if (transform.childCount > 9)
             {
                 CodePanelRectTransform.sizeDelta = new Vector2(CodePanelRectTransform.sizeDelta.x, CodePanelRectTransform.sizeDelta.y + DraggableTemplate.sizeDelta.y + 1.2f); //2 is the spacing offset
                 ScrollBar.normalizedPosition = new Vector2(0, 0); //0,0 for bottom, 0,1 for top
@@ -140,9 +148,14 @@ public class CodePanel : MonoBehaviour, IDropHandler
     {
         for (int i = 1; i < transform.childCount; i++)
         {
+            //repeat function start
             if (transform.GetChild(i).name == "EndClosure")
             {
-                if(endClosure.Count <= 0 && repeatStartClosure.Count <= 0)
+                transform.GetChild(i).GetComponent<Image>().sprite = EndClosureExecution;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = EndClosure;
+
+                if (endClosure.Count <= 0 && repeatStartClosure.Count <= 0)
                 {
                     continue;
                 }
@@ -173,16 +186,19 @@ public class CodePanel : MonoBehaviour, IDropHandler
                         endClosure.Pop();
                     }
                 }
-                
-                
+
                 //to tell if it needs to loop, if not then continue;
             }
             else if (transform.GetChild(i).name == "RepeatOneTime")
             {
+                transform.GetChild(i).GetComponent<Image>().sprite = RepeatOneTimeExecution;
                 //set the sign for loop, and jump into next line
                 repeatStartClosure.Push(i + 1); // add into the stack
-                continue;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = RepeatOneTime;
             }
+            //repeat function end
+
             else if (transform.GetChild(i).name == "MoveRight")
             {
                 transform.GetChild(i).GetComponent<Image>().sprite = MoveRightExecution;
@@ -225,6 +241,19 @@ public class CodePanel : MonoBehaviour, IDropHandler
                 yield return new WaitForSeconds(executionDelaySeconds);
                 transform.GetChild(i).GetComponent<Image>().sprite = JumpIncrease;
             }
+            else if (transform.GetChild(i).name == "IfEncounterBox")
+            {
+                transform.GetChild(i).GetComponent<Image>().sprite = IfEncounterBoxExecution;
+                yield return new WaitForSeconds(executionDelaySeconds);
+                transform.GetChild(i).GetComponent<Image>().sprite = IfEncounterBox;
+
+                if (playerController.gameObject.transform.position.x > -0.98f || playerController.gameObject.transform.position.x < -4.14f)
+                {
+                    //within jump area
+                    i += 1;
+                }
+                
+            }
             
 
         }
@@ -235,6 +264,7 @@ public class CodePanel : MonoBehaviour, IDropHandler
 
     public void ClearCodeGroup()
     {
+        Time.timeScale = 1f; //resume the time
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //for (int i = transform.childCount-1; i > 0; i--)
         //{
@@ -247,5 +277,16 @@ public class CodePanel : MonoBehaviour, IDropHandler
     {
         playerController.gameObject.transform.position = new Vector2(-6.65f, 2.72f);
         playerController.gameObject.transform.localScale = new Vector2(1, 1);
+    }
+
+    public void GoBackToWelcome()
+    {
+        SceneManager.LoadScene("Welcome");
+    }
+
+    public void LoadNextLevel()
+    {
+        Time.timeScale = 1f; //resume the time
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

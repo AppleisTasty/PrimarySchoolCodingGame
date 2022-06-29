@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask ground;
     [SerializeField]float moveForce = 8f;
-    float jumpForce = 14;
+    public float jumpForce = 14;
     private float hurtForce = 10f;
     private float heightReduceRatio = 0.6f;
 
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
     public void JumpIncrease()
     {
-        jumpForce *= 1.5f;
+        jumpForce += 3f;
     }
 
     private void AnimationState()

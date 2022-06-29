@@ -7,6 +7,7 @@ public class WelcomeScript : MonoBehaviour
 {
     private PlayerController playerController;
     private float executionDelaySeconds = 4f;
+    public GameObject levelsUI;
 
     
     // Start is called before the first frame update
@@ -49,5 +50,10 @@ public class WelcomeScript : MonoBehaviour
     public void StartNewGame()
     {
         SceneManager.LoadScene("Level1-1");
+    }
+
+    public void LoadCorrespondingScene(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
     }
 }
