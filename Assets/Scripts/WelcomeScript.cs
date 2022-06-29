@@ -56,4 +56,9 @@ public class WelcomeScript : MonoBehaviour
     {
         SceneManager.LoadScene(levelName);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
