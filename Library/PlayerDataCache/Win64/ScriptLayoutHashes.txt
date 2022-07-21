@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-/Users/tablee/GitRepository/PrimarySchoolCodingGame/RunTestWindows/V0.0.5/PrimarySchoolCodingGame.exe
+/Users/tablee/GitRepository/PrimarySchoolCodingGame/RunTestWindows/Demo/Demo/PrimarySchoolCodingGame.exe
 SceneListBegin?
 Assets/Scenes/Welcome.unity
 Assets/Scenes/LoadingScreen.unity
@@ -9,8 +9,12 @@ Assets/Scenes/Level1-2.unity
 Assets/Scenes/Level1-3.unity
 Assets/Scenes/Level1-4.unity
 Assets/Scenes/Level2-1.unity
+Assets/Scenes/Level2-2.unity
+Assets/Scenes/Level3-1.unity
+Assets/Scenes/Level3-2.unity
+Assets/Scenes/GameOver.unity
 SceneListEnd?
-71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.WelcomeScript
+a4c26efcff3f3a2b766c27e2b013f9e9 Assembly-CSharp.dll:.WelcomeScript
 3c08375166df118bd1801438fc36b92f Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 77c21079ace8d76ce6e941d3dabbfe6e Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
@@ -25,7 +29,7 @@ e1bbf0ab858085e38fae6b12ebbdcd35 UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 e1bbf0ab858085e38fae6b12ebbdcd35 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 e1bbf0ab858085e38fae6b12ebbdcd35 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 201e3fde670b00545944bb3db215c80a UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-1113829eaf2abc379a07d76b787a3a42 Assembly-CSharp.dll:.CodePanel
+ad107c9ac5c0efab1623a0b184ea107d Assembly-CSharp.dll:.CodePanel
 e7a73f5f78ba6445195ec23b74a1ce2d Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventHandler
 cf9f5cf2c3145a37ac07f00e50e460f9 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -162,6 +166,6 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 d791aa6007fa3640be1164ea75bb087d Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 df434544c9f7b33d1cc7e635b180d279 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
-506fa10091c7849f99c84b58571ac1ac Assembly-CSharp.dll:.PlayerController
+cbd8a46efe9844ea42af36e006e3b345 Assembly-CSharp.dll:.PlayerController
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
-b7221099f396fc105443ec010efd3ebc Assembly-CSharp.dll:.PlayerReachGoal
+d54c55dc1eb484aa480d313be58cb778 Assembly-CSharp.dll:.PlayerReachGoal
